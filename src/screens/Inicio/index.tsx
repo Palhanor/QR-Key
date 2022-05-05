@@ -1,11 +1,9 @@
 // Resolver o problema de erro com a importação da imagem
-// Criar as novas rotas
-
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import Botao from "../../components/Botao";
 import Texto from "../../components/Texto";
-import testeImg from "../../../assets/teste.png";
+import testeImg from "../../../assets/QRKey.png";
 
 export default function App() {
   return (
@@ -30,6 +28,8 @@ const styles = StyleSheet.create({
   imagem: {
     marginTop: 32,
     marginBottom: 46,
+    height: 220,
+    width: 220,
   },
   botoes: {
     width: "100%",

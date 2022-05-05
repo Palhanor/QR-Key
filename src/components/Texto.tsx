@@ -11,7 +11,7 @@ export default function Texto({
   title,
 }: {
   children: any;
-  style: any;
+  style?: any;
   regular?: boolean;
   title?: boolean;
 }) {

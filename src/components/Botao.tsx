@@ -1,13 +1,15 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { GestureResponderEvent, StyleSheet, TouchableOpacity } from "react-native";
 import Texto from "./Texto";
 
 export default function Botao({
   children,
+  onPress,
   primary,
   secondary,
 }: {
   children: any;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
   primary?: boolean;
   secondary?: boolean;
 }) {
@@ -24,7 +26,7 @@ export default function Botao({
 
   return (
     <>
-      <TouchableOpacity style={estiloBotao}>
+      <TouchableOpacity onPress={onPress} style={estiloBotao}>
         <Texto regular style={estiloTextoBotao}>
           {" "}
           {children}{" "}
