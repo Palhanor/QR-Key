@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { StatusBar, StyleSheet, View, Text } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import Inicio from "./src/screens/Inicio";
-// import GerarDados from "./src/screens/GerarDados";
-// import GerarResultado from "./src/screens/GerarResultado";
+import Mensagem from "./src/screens/Mensagem";
+import QRKey from "./src/screens/QRKey";
 
 export default function App() {
   const [mensagem, setMensagem] = useState({ titulo: "", texto: "" });
@@ -11,8 +11,8 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar />
       <Inicio></Inicio>
-      {/* <GerarDados setMensagem={setMensagem}></GerarDados> */}
-      {/* <GerarResultado {...mensagem} ></GerarResultado> */}
+      {/* <Mensagem setMensagem={setMensagem}></Mensagem> */}
+      {/* <QRKey {...mensagem} ></QRKey> */}
     </View>
   );
 }

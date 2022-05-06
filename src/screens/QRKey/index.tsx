@@ -31,10 +31,6 @@ export default function GerarResultado({
         logo={require('../../../assets/QRKey.png')}
         logoBackgroundColor="transparent"
       />
-      <Texto regular style={styles.qrcodePlaceholder}>
-        {titulo}
-        {texto}
-      </Texto>
       <View style={styles.botoes}>
         <Botao>Compartilhar</Botao>
         <Botao secondary>Baixar</Botao>
