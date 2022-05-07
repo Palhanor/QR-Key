@@ -3,16 +3,19 @@ import { StatusBar, StyleSheet, View } from "react-native";
 import Inicio from "./src/screens/Inicio";
 import Mensagem from "./src/screens/Mensagem";
 import QRKey from "./src/screens/QRKey";
+import Scan from "./src/screens/Scan";
 
 export default function App() {
-  const [mensagem, setMensagem] = useState({ titulo: "", texto: "" });
+  const [encrypt, setEncrypt] = useState({ titulo: "", texto: "" });
+  const [decrypt, setDecrypt] = useState("");
 
   return (
     <View style={styles.container}>
       <StatusBar />
-      <Inicio></Inicio>
-      {/* <Mensagem setMensagem={setMensagem}></Mensagem> */}
-      {/* <QRKey {...mensagem} ></QRKey> */}
+      {/* <Inicio /> */}
+      {/* <Mensagem setEncrypt={setEncrypt}></Mensagem> */}
+      {/* <QRKey {...encrypt} ></QRKey> */}
+      <Scan/>
     </View>
   );
 }
