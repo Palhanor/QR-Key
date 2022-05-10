@@ -1,21 +1,21 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import Botao from "../../components/Botao";
 import Texto from "../../components/Texto";
 
 const CryptoJS = require("crypto-js");
 
-export default function Encriptar({
-  setEncryptTexto,
-}: {
-  setEncryptTexto: Dispatch<SetStateAction<string>>;
-}) {
+export default function EncriptarScreen() {
   const [titulo, setTitulo] = useState("");
   const [chave, setChave] = useState("");
   const [texto, setTexto] = useState("");
 
+  const navigation = useNavigation()
+
   return (
-    <>
+    <View style={styles.container}>
       <Texto title style={styles.titulo}>
         Gerar
       </Texto>
@@ -49,22 +49,31 @@ export default function Encriptar({
       </View>
       <View style={styles.botoes}>
         <Botao
-          onPress={() =>
-            setEncryptTexto(CryptoJS.AES.encrypt(texto, chave).toString())
-          }
+          onPress={() => {
+            navigation.navigate('QRKey', {
+              titulo: titulo,
+              texto: CryptoJS.AES.encrypt(texto, chave).toString(),
+            })
+          }}
         >
           Gerar
         </Botao>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1D2445",
+    alignItems: "center",
+    padding: 16,
+  },
   titulo: {
     color: "#FFFFFF",
     fontSize: 36,
-    marginVertical: 24,
+    marginVertical: 12,
     fontFamily: "Titulo",
   },
   formulario: {
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: 22,
     marginBottom: 16,
   },
   input: {

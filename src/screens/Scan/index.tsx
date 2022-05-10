@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+
 import Texto from "../../components/Texto";
 import Botao from "../../components/Botao";
 
-export default function App({ setDecryptTexto, setTituloGlobal }: { setDecryptTexto: React.Dispatch<React.SetStateAction<string>>, setTituloGlobal: React.Dispatch<React.SetStateAction<string>> }) {
+export default function ScanScreen() {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Visualizando...");
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     askForCameraPermission();
@@ -22,10 +26,8 @@ export default function App({ setDecryptTexto, setTituloGlobal }: { setDecryptTe
 
   function handleBarCodeScanned({ data }: { data: string }) {
     setScanned(true);
-    setText('Concluido!');
-    const objMensagem = JSON.parse(data)
-    setTituloGlobal(objMensagem.titulo)
-    setDecryptTexto(objMensagem.texto)
+    setText("Concluido!");
+    navigation.navigate("Decriptar", { data: data });
   }
 
   function waitingPermission() {
@@ -64,7 +66,7 @@ export default function App({ setDecryptTexto, setTituloGlobal }: { setDecryptTe
       <Texto regular style={styles.mensagem}>
         {text}
       </Texto>
-      {scanned && (
+      {/* {scanned && (
         <Botao
           onPress={() => {
             setScanned(false);
@@ -73,20 +75,22 @@ export default function App({ setDecryptTexto, setTituloGlobal }: { setDecryptTe
         >
           Continuar
         </Botao>
-      )}
+      )} */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
+    backgroundColor: "#1D2445",
     alignItems: "center",
+    padding: 16,
   },
   titulo: {
     color: "#FFFFFF",
     fontSize: 36,
-    marginVertical: 24,
+    marginVertical: 12,
     fontFamily: "Titulo",
   },
   mensagem: {

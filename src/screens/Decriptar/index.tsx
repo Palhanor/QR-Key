@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
-import Texto from "../../components/Texto";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
+
+import Texto from "../../components/Texto";
 import Botao from "../../components/Botao";
 
 const CryptoJS = require("crypto-js");
 
-export default function Decriptar({ tituloGlobal, decryptTexto }: { tituloGlobal: string, decryptTexto: string }) {
+export default function DecriptarScreen() {
+  const params = useRoute();
+  const mensagem = params?.params?.data;
+  const titulo = JSON.parse(mensagem)?.titulo;
+  const textoCriptografado = JSON.parse(mensagem)?.texto;
+
   const [decriptografado, setDecriptografado] = useState(false);
   const [chave, setChave] = useState("");
-  const [mensagemFinal, setMensagemFinal] = useState("")
+  const [textoDescriptografado, setTextoDescriptografado] = useState("");
+
 
   return (
-    <>
+    <View style={styles.container}>
       <Texto title style={styles.titulo}>
         Visualizar
       </Texto>
@@ -20,7 +28,7 @@ export default function Decriptar({ tituloGlobal, decryptTexto }: { tituloGlobal
           Titulo
         </Texto>
         <Texto regular style={styles.mensagem}>
-          { tituloGlobal }
+          {titulo}
         </Texto>
         {!decriptografado ? (
           <>
@@ -32,6 +40,18 @@ export default function Decriptar({ tituloGlobal, decryptTexto }: { tituloGlobal
               onChangeText={setChave}
               value={chave}
             ></TextInput>
+            <Botao
+              onPress={() => {
+                setTextoDescriptografado(
+                  CryptoJS.AES.decrypt(textoCriptografado, chave).toString(
+                    CryptoJS.enc.Utf8
+                  )
+                );
+                setDecriptografado(true);
+              }}
+            >
+              Descriptografar
+            </Botao>
           </>
         ) : (
           <>
@@ -39,28 +59,26 @@ export default function Decriptar({ tituloGlobal, decryptTexto }: { tituloGlobal
               Texto
             </Texto>
             <Texto regular style={styles.mensagem}>
-              { mensagemFinal }
+              { textoDescriptografado }
             </Texto>
           </>
         )}
       </View>
-      <Botao
-        onPress={() => {
-          setMensagemFinal(CryptoJS.AES.decrypt(decryptTexto, chave).toString(CryptoJS.enc.Utf8))
-          setDecriptografado(true)
-        }}
-      >
-        Descriptografar
-      </Botao>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1D2445",
+    alignItems: "center",
+    padding: 16,
+  },
   titulo: {
     color: "#FFFFFF",
     fontSize: 36,
-    marginVertical: 24,
+    marginVertical: 12,
     fontFamily: "Titulo",
   },
   dados: {
@@ -68,8 +86,13 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: 22,
     marginBottom: 16,
+  },
+  mensagem: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    marginBottom: 24,
   },
   input: {
     borderColor: "#FFFFFF",
@@ -80,8 +103,5 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)",
     color: "#FFFFFF",
     marginBottom: 24,
-  },
-  mensagem: {
-    color: "#FFFFFF",
   },
 });

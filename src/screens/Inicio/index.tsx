@@ -1,28 +1,41 @@
-// Resolver o problema de erro com a importação da imagem
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import Botao from "../../components/Botao";
 import Texto from "../../components/Texto";
 import testeImg from "../../../assets/QRKey.png";
 
-export default function App() {
+export default function InicioScreen() {
+  const navigation = useNavigation();
+
   return (
-    <>
-      <Texto title style={styles.titulo}>QR Key</Texto>
+    <View style={styles.container}>
+      <Texto title style={styles.titulo}>
+        QR Key
+      </Texto>
       <Image style={styles.imagem} source={testeImg} />
       <View style={styles.botoes}>
-        <Botao>Gerar</Botao>
-        <Botao secondary>Visualizar</Botao>
+        <Botao onPress={() => navigation.navigate("Encriptar")}>Gerar</Botao>
+        <Botao secondary onPress={() => navigation.navigate("Scan")}>
+          Visualizar
+        </Botao>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1D2445",
+    alignItems: "center",
+    padding: 16,
+  },
   titulo: {
     color: "#FFFFFF",
     fontSize: 36,
-    marginVertical: 24,
+    marginVertical: 12,
     fontFamily: "Titulo",
   },
   imagem: {

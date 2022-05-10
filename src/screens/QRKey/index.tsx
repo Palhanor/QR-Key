@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Botao from "../../components/Botao";
-import Texto from "../../components/Texto";
+import { useRoute } from "@react-navigation/native";
 import QRCode from "react-native-qrcode-svg";
 
-export default function QRKey({
-  tituloGlobal,
-  encryptTexto,
-}: {
-  tituloGlobal: string;
-  encryptTexto: string;
-}) {
+import Botao from "../../components/Botao";
+import Texto from "../../components/Texto";
 
-  const [qrValue, setQRValue] = useState({titulo: tituloGlobal, texto: encryptTexto})
+export default function QRKeyScreen() {
+  const params = useRoute()
+
+  const [qrValue, setQRValue] = useState({titulo: params?.params?.titulo, texto: params?.params?.texto})
 
   useEffect(() => {
-    setQRValue({titulo: tituloGlobal, texto: encryptTexto})
-  }, [tituloGlobal, encryptTexto])
+    setQRValue({titulo: params?.params?.titulo, texto: params?.params?.texto})
+  }, [params.params])
 
   return (
-    <>
+    <View style={styles.container}>
       <Texto title style={styles.titulo}>
         Gerar
       </Texto>
@@ -35,15 +32,21 @@ export default function QRKey({
         <Botao>Compartilhar</Botao>
         <Botao secondary>Baixar</Botao>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#1D2445",
+    alignItems: "center",
+    padding: 16,
+  },
   titulo: {
     color: "#FFFFFF",
     fontSize: 36,
-    marginVertical: 24,
+    marginVertical: 12,
     fontFamily: "Titulo",
   },
   qrcodePlaceholder: {
