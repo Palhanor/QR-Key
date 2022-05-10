@@ -4,19 +4,19 @@ import Botao from "../../components/Botao";
 import Texto from "../../components/Texto";
 import QRCode from "react-native-qrcode-svg";
 
-export default function GerarResultado({
-  titulo,
-  texto,
+export default function QRKey({
+  tituloGlobal,
+  encryptTexto,
 }: {
-  titulo: string;
-  texto: string;
+  tituloGlobal: string;
+  encryptTexto: string;
 }) {
 
-  const [qrValue, setQRValue] = useState({titulo: titulo, texto: texto})
+  const [qrValue, setQRValue] = useState({titulo: tituloGlobal, texto: encryptTexto})
 
   useEffect(() => {
-    setQRValue({titulo: titulo, texto: texto})
-  }, [titulo, texto])
+    setQRValue({titulo: tituloGlobal, texto: encryptTexto})
+  }, [tituloGlobal, encryptTexto])
 
   return (
     <>

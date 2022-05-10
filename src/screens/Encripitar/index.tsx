@@ -5,10 +5,10 @@ import Texto from "../../components/Texto";
 
 const CryptoJS = require("crypto-js");
 
-export default function GerarDados({
-  setMensagem,
+export default function Encriptar({
+  setEncryptTexto,
 }: {
-  setMensagem: Dispatch<SetStateAction<{ titulo: string; texto: string }>>;
+  setEncryptTexto: Dispatch<SetStateAction<string>>;
 }) {
   const [titulo, setTitulo] = useState("");
   const [chave, setChave] = useState("");
@@ -50,10 +50,7 @@ export default function GerarDados({
       <View style={styles.botoes}>
         <Botao
           onPress={() =>
-            setMensagem({
-              titulo: titulo,
-              texto: CryptoJS.AES.encrypt(texto, chave).toString(),
-            })
+            setEncryptTexto(CryptoJS.AES.encrypt(texto, chave).toString())
           }
         >
           Gerar

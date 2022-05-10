@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import Inicio from "./src/screens/Inicio";
-import Mensagem from "./src/screens/Mensagem";
+import Encriptar from "./src/screens/Encripitar";
 import QRKey from "./src/screens/QRKey";
 import Scan from "./src/screens/Scan";
+import Decriptar from './src/screens/Decriptar'
 
 export default function App() {
-  const [encrypt, setEncrypt] = useState({ titulo: "", texto: "" });
-  const [decrypt, setDecrypt] = useState("");
+  const [tituloGlobal, setTituloGlobal] = useState("");
+  const [encryptTexto, setEncryptTexto] = useState("")
+  const [decryptTexto, setDecryptTexto] = useState("");
 
   return (
     <View style={styles.container}>
       <StatusBar />
-      {/* <Inicio /> */}
-      {/* <Mensagem setEncrypt={setEncrypt}></Mensagem> */}
-      {/* <QRKey {...encrypt} ></QRKey> */}
-      <Scan/>
+      <Inicio />
+      {/* <Encriptar setEncryptTexto={setEncryptTexto} /> */}
+      {/* <QRKey tituloGlobal={tituloGlobal} encryptTexto={encryptTexto} /> */}
+      {/* <Scan setTituloGlobal={setTituloGlobal} setDecryptTexto={setDecryptTexto} /> */}
+      {/* <Decriptar tituloGlobal={tituloGlobal} decryptTexto={decryptTexto} /> */}
     </View>
   );
 }

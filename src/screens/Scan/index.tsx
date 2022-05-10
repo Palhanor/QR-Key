@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Texto from "../../components/Texto";
 import Botao from "../../components/Botao";
 
-export default function App() {
+export default function App({ setDecryptTexto, setTituloGlobal }: { setDecryptTexto: React.Dispatch<React.SetStateAction<string>>, setTituloGlobal: React.Dispatch<React.SetStateAction<string>> }) {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Visualizando...");
@@ -22,7 +22,10 @@ export default function App() {
 
   function handleBarCodeScanned({ data }: { data: string }) {
     setScanned(true);
-    setText(data);
+    setText('Concluido!');
+    const objMensagem = JSON.parse(data)
+    setTituloGlobal(objMensagem.titulo)
+    setDecryptTexto(objMensagem.texto)
   }
 
   function waitingPermission() {
