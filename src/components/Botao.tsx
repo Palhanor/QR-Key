@@ -50,9 +50,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   secondaryButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     width: "100%",
     borderRadius: 10,
+    borderColor: "#FFFFFF",
+    borderWidth: 1,
     padding: 24,
   },
   secondaryText: {

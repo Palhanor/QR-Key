@@ -1,104 +1,80 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import Header from "../../components/Header";
 import Botao from "../../components/Botao";
 import Texto from "../../components/Texto";
+import globalStyle from "../../styles";
+import { propsStack } from "../../interfaces/screens";
 
 const CryptoJS = require("crypto-js");
 
-export default function EncriptarScreen() {
+export default function Encriptar() {
   const [titulo, setTitulo] = useState("");
   const [chave, setChave] = useState("");
   const [texto, setTexto] = useState("");
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<propsStack>();
+
+  function generateQRKey() {
+    if (titulo !== "" && chave !== "" && texto !== "") {
+      navigation.navigate("QRKey", {
+        titulo: titulo,
+        mensagem: CryptoJS.AES.encrypt(texto, chave).toString(),
+      });
+      setTitulo("");
+      setChave("");
+      setTexto("");
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      <Texto title style={styles.titulo}>
-        Gerar
-      </Texto>
-      <View style={styles.formulario}>
-        <Texto regular style={styles.label}>
-          Titulo
-        </Texto>
-        <TextInput
-          style={styles.input}
-          onChangeText={setTitulo}
-          value={titulo}
-        ></TextInput>
-        <Texto regular style={styles.label}>
-          Chave
-        </Texto>
-        <TextInput
-          style={styles.input}
-          onChangeText={setChave}
-          value={chave}
-        ></TextInput>
-        <Texto regular style={styles.label}>
-          Texto
-        </Texto>
-        <TextInput
-          multiline
-          numberOfLines={6}
-          style={[styles.input, styles.textarea]}
-          onChangeText={setTexto}
-          value={texto}
-        ></TextInput>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={globalStyle.spacedContainer}>
+        <Header>Gerar</Header>
+        <View style={styles.form}>
+          <Texto regular style={globalStyle.labelText}>
+            Titulo
+          </Texto>
+          <TextInput
+            style={globalStyle.inputField}
+            onChangeText={setTitulo}
+            value={titulo}
+          ></TextInput>
+          <Texto regular style={globalStyle.labelText}>
+            Chave
+          </Texto>
+          <TextInput
+            style={globalStyle.inputField}
+            onChangeText={setChave}
+            value={chave}
+          ></TextInput>
+          <Texto regular style={globalStyle.labelText}>
+            Texto
+          </Texto>
+          <TextInput
+            multiline
+            numberOfLines={8}
+            style={[globalStyle.inputField, styles.textarea]}
+            onChangeText={setTexto}
+            value={texto}
+          ></TextInput>
+        </View>
+        <View style={globalStyle.bottomButtons}>
+          <Botao onPress={generateQRKey}>Gerar</Botao>
+        </View>
       </View>
-      <View style={styles.botoes}>
-        <Botao
-          onPress={() => {
-            navigation.navigate('QRKey', {
-              titulo: titulo,
-              texto: CryptoJS.AES.encrypt(texto, chave).toString(),
-            })
-          }}
-        >
-          Gerar
-        </Botao>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1D2445",
-    alignItems: "center",
-    padding: 16,
-  },
-  titulo: {
-    color: "#FFFFFF",
-    fontSize: 36,
-    marginVertical: 12,
-    fontFamily: "Titulo",
-  },
-  formulario: {
+  form: {
     width: "100%",
-  },
-  label: {
-    color: "#FFFFFF",
-    fontSize: 22,
-    marginBottom: 16,
-  },
-  input: {
-    borderColor: "#FFFFFF",
-    borderRadius: 6,
-    borderWidth: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: "rgba(255, 255, 255, 0)",
-    color: "#FFFFFF",
-    marginBottom: 24,
   },
   textarea: {
     paddingTop: 16,
     textAlignVertical: "top",
-  },
-  botoes: {
-    width: "100%",
+    maxHeight: 180,
   },
 });
