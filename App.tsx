@@ -1,14 +1,12 @@
 import React from "react";
 import { StatusBar } from "react-native";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import Inicio from "./src/screens/Inicio";
-import Encriptar from "./src/screens/Encripitar";
-import QRKey from "./src/screens/QRKey";
+import Home from "./src/screens/Home";
+import Encrypt from "./src/screens/Encrypt";
 import Scan from "./src/screens/Scan";
-import Decriptar from "./src/screens/Decriptar";
+import QRKey from "./src/screens/QRKey";
+import Decrypt from "./src/screens/Decrypt";
 import { propsNavigationStack } from "./src/interfaces/screens";
 
 const Stack = createNativeStackNavigator<propsNavigationStack>();
@@ -18,14 +16,14 @@ export default function App() {
     <NavigationContainer>
       <StatusBar backgroundColor={"#1D2445"} />
       <Stack.Navigator
-        initialRouteName="QR Key"
-        screenOptions={{ headerShown: false, headerTransparent: true }}
+        initialRouteName="Home"
+        screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="QR Key" component={Inicio} />
-        <Stack.Screen name="Encriptar" component={Encriptar} />
-        <Stack.Screen name="QRKey" component={QRKey} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Encrypt" component={Encrypt} />
         <Stack.Screen name="Scan" component={Scan} />
-        <Stack.Screen name="Decriptar" component={Decriptar} />
+        <Stack.Screen name="QRKey" component={QRKey} />
+        <Stack.Screen name="Decrypt" component={Decrypt} />
       </Stack.Navigator>
     </NavigationContainer>
   );

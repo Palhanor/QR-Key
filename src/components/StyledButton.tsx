@@ -1,36 +1,29 @@
 import React from "react";
-import { GestureResponderEvent, StyleSheet, TouchableOpacity } from "react-native";
-import Texto from "./Texto";
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import StyledText from "./StyledText";
 
-export default function Botao({
+export default function StyledButton({
   children,
+  visual,
   onPress,
-  primary,
-  secondary,
 }: {
   children: any;
+  visual?: string;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
-  primary?: boolean;
-  secondary?: boolean;
 }) {
-  let estiloBotao: any = styles.primaryButton;
-  let estiloTextoBotao: any = styles.primaryText;
-
-  if (primary) {
-    estiloBotao = styles.primaryButton;
-    estiloTextoBotao = styles.primaryText;
-  } else if (secondary) {
-    estiloBotao = styles.secondaryButton;
-    estiloTextoBotao = styles.secondaryText;
-  }
+  const buttonStyle =
+    visual !== "secondary" ? styles.primaryButton : styles.secondaryButton;
+  const buttonText =
+    visual !== "secondary" ? styles.primaryText : styles.secondaryText;
 
   return (
     <>
-      <TouchableOpacity onPress={onPress} style={estiloBotao}>
-        <Texto regular style={estiloTextoBotao}>
-          {" "}
-          {children}{" "}
-        </Texto>
+      <TouchableOpacity onPress={onPress} style={buttonStyle}>
+        <StyledText style={buttonText}> {children} </StyledText>
       </TouchableOpacity>
     </>
   );

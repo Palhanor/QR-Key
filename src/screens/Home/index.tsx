@@ -1,39 +1,39 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Header from "../../components/Header";
-import Botao from "../../components/Botao";
-import logo from "../../../assets/favicon.png";
 import globalStyle from "../../styles";
+import Header from "../../components/Header";
+import StyledButton from "../../components/StyledButton";
+import logo from "../../../assets/favicon.png";
 import { propsStack } from "../../interfaces/screens";
 
-export default function Inicio() {
+export default function Home() {
   const navigation = useNavigation<propsStack>();
 
-  function goToEncriptar() {
-    navigation.navigate("Encriptar");
+  function goToEncrypt() {
+    navigation.navigate("Encrypt");
   }
 
-  function goToEscanear() {
+  function goToScan() {
     navigation.navigate("Scan");
   }
 
   return (
     <View style={globalStyle.spacedContainer}>
       <Header>QR Key</Header>
-      <Image style={styles.imagem} source={logo} />
+      <Image style={styles.image} source={logo} />
       <View style={globalStyle.bottomButtons}>
-        <Botao onPress={goToEncriptar}>Encriptar</Botao>
-        <Botao secondary onPress={goToEscanear}>
+        <StyledButton onPress={goToEncrypt}>Encriptar</StyledButton>
+        <StyledButton visual="secondary" onPress={goToScan}>
           Decriptar
-        </Botao>
+        </StyledButton>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  imagem: {
+  image: {
     marginTop: 32,
     marginBottom: 46,
     height: 220,

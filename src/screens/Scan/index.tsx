@@ -1,78 +1,78 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import Header from "../../components/Header";
-import Texto from "../../components/Texto";
-import Botao from "../../components/Botao";
 import { useNavigation } from "@react-navigation/native";
+import { BarCodeScanner } from "expo-barcode-scanner";
 import globalStyle from "../../styles";
+import Header from "../../components/Header";
+import StyledText from "../../components/StyledText";
+import StyledButton from "../../components/StyledButton";
 import { propsStack } from "../../interfaces/screens";
 
 export default function Scan() {
-  const [permissao, setPermissao] = useState<null | boolean>(null);
-  const [escaneado, setEscaneado] = useState(false);
+  const [permission, setPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState<boolean>(false);
 
   const navigation = useNavigation<propsStack>();
 
   useEffect(() => {
-    pedirPermissao();
-    setEscaneado(false);
+    askPermission();
+    setScanned(false);
   }, []);
 
-
-  function pedirPermissao() {
+  function askPermission() {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setPermissao(status === "granted");
+      setPermission(status === "granted");
     })();
   }
 
-  function escanear({ data }: { data: string }) {
+  function scan({ data }: { data: string }) {
     if (data.substring(0, 6) == '{"t":"') {
-      setEscaneado(true);
-      navigation.navigate("Decriptar", { data: data });
+      setScanned(true);
+      navigation.navigate("Decrypt", { data: data });
     } else {
-      setEscaneado(true);
-      Alert.alert("Erro ao escanear", "O Código escaneado não se trata de um QR Key", 
-        [{text: "Voltar", onPress: () => navigation.navigate("QR Key")}]);
+      setScanned(true);
+      Alert.alert(
+        "Erro ao escanear",
+        "O Código escaneado não se trata de um QR Key",
+        [{ text: "Voltar", onPress: () => navigation.navigate("Home") }]
+      );
     }
   }
 
-  function aguardarPermissao() {
+  function waitingPermission() {
     return (
       <View>
-        <Texto>Aguardando a permissão de uso da câmera</Texto>
+        <StyledText>Aguardando a permissão de uso da câmera</StyledText>
       </View>
     );
   }
 
-  function semPermissao() {
+  function noPermission() {
     return (
       <View>
-        <Texto>Sem acesso à câmera</Texto>
-        <Botao onPress={() => pedirPermissao()}>
+        <StyledText>Sem acesso à câmera</StyledText>
+        <StyledButton onPress={() => askPermission()}>
           Permitir o uso da câmera
-        </Botao>
+        </StyledButton>
       </View>
     );
   }
 
-  if (permissao === null) aguardarPermissao;
-  if (permissao === false) semPermissao;
+  if (permission === null) waitingPermission;
+  if (permission === false) noPermission;
 
   return (
     <View style={globalStyle.spacelessContainer}>
       <Header>Visualizar</Header>
       <View style={styles.barcodebox}>
         <BarCodeScanner
-          onBarCodeScanned={escaneado ? undefined : escanear}
+          onBarCodeScanned={scanned ? undefined : scan}
           style={styles.barcode}
         />
       </View>
-      {!escaneado && (
-        <Texto regular style={styles.status}>
-          Visualizando...
-        </Texto>
+      {!scanned && (
+        <StyledText style={styles.status}>Visualizando...</StyledText>
       )}
     </View>
   );

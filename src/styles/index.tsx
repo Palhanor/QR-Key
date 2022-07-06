@@ -17,8 +17,8 @@ const globalStyle = StyleSheet.create({
   },
   labelText: {
     color: "#FFFFFF",
-    fontSize: 22,
-    marginBottom: 16,
+    fontSize: 20,
+    marginBottom: 14,
   },
   inputField: {
     borderColor: "#FFFFFF",

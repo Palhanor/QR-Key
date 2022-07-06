@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,36 +10,36 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../../components/Header";
-import Botao from "../../components/Botao";
-import Texto from "../../components/Texto";
 import globalStyle from "../../styles";
+import StyledText from "../../components/StyledText";
+import StyledButton from "../../components/StyledButton";
 import { propsStack } from "../../interfaces/screens";
 
 const CryptoJS = require("crypto-js");
 
-export default function Encriptar() {
-  const [titulo, setTitulo] = useState("");
-  const [chave, setChave] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const [messageSize, setMessageSize] = useState(0);
-
+export default function Encrypt() {
   const navigation = useNavigation<propsStack>();
 
+  const [title, setTitle] = useState<string>("");
+  const [key, setKey] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [messageSize, setMessageSize] = useState<number>(0);
+
   function generateQRKey() {
-    if (titulo !== "" && chave !== "" && mensagem !== "") {
+    if (title !== "" && key !== "" && message !== "") {
       navigation.navigate("QRKey", {
-        titulo: titulo,
-        mensagem: CryptoJS.AES.encrypt(mensagem, chave).toString(),
+        title: title,
+        message: CryptoJS.AES.encrypt(message, key).toString(),
       });
-      setTitulo("");
-      setChave("");
-      setMensagem("");
+      setTitle("");
+      setKey("");
+      setMessage("");
     }
   }
 
-  function escreveMensagem(text: string) {
+  function writeMessage(text: string) {
     if (messageSize <= 280) {
-      setMensagem(text.substring(0, 280));
+      setMessage(text.substring(0, 280));
       setMessageSize(text.substring(0, 280).length);
     }
   }
@@ -54,40 +54,32 @@ export default function Encriptar() {
         <ScrollView style={styles.container}>
           <Header>Gerar</Header>
           <View style={styles.form}>
-            <Texto regular style={globalStyle.labelText}>
-              Titulo
-            </Texto>
+            <StyledText style={globalStyle.labelText}>Titulo</StyledText>
             <TextInput
               style={globalStyle.inputField}
-              onChangeText={setTitulo}
-              value={titulo}
+              onChangeText={setTitle}
+              value={title}
             ></TextInput>
-            <Texto regular style={globalStyle.labelText}>
-              Chave
-            </Texto>
+            <StyledText style={globalStyle.labelText}>Chave</StyledText>
             <TextInput
               style={globalStyle.inputField}
-              onChangeText={setChave}
-              value={chave}
+              onChangeText={setKey}
+              value={key}
             ></TextInput>
             <View style={styles.inline}>
-              <Texto regular style={globalStyle.labelText}>
-                Texto
-              </Texto>
-              <Texto regular style={styles.contador}>
-                {messageSize}/280
-              </Texto>
+              <StyledText style={globalStyle.labelText}>Texto</StyledText>
+              <StyledText style={styles.counter}>{messageSize}/280</StyledText>
             </View>
             <TextInput
               multiline
               numberOfLines={8}
               style={[globalStyle.inputField, styles.textarea]}
-              onChangeText={escreveMensagem}
-              value={mensagem}
+              onChangeText={writeMessage}
+              value={message}
             ></TextInput>
           </View>
           <View style={globalStyle.bottomButtons}>
-            <Botao onPress={generateQRKey}>Gerar</Botao>
+            <StyledButton onPress={generateQRKey}>Gerar</StyledButton>
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -117,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  contador: {
+  counter: {
     color: "#FFFFFF",
     fontSize: 16,
     marginBottom: 16,
