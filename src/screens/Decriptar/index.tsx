@@ -5,8 +5,9 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import Header from "../../components/Header";
 import Texto from "../../components/Texto";
 import Botao from "../../components/Botao";
@@ -25,18 +26,30 @@ export default function Decriptar() {
   const [textoDescriptografado, setTextoDescriptografado] = useState("");
 
   function descriptografar() {
-    setTextoDescriptografado(
-      CryptoJS.AES.decrypt(textoCriptografado, chave).toString(
-        CryptoJS.enc.Utf8
-      )
-    );
-    setDecriptografado(true);
+    try {
+      const mensagemDescriptografada = CryptoJS.AES
+        .decrypt(textoCriptografado, chave)
+        .toString(CryptoJS.enc.Utf8)
+
+      if (mensagemDescriptografada !== "") {
+        setTextoDescriptografado(
+          CryptoJS.AES.decrypt(textoCriptografado, chave).toString(
+            CryptoJS.enc.Utf8
+          )
+        );
+        setDecriptografado(true);
+      } else {
+        Alert.alert("Senha inválida!", "Tente novamente...")
+      }
+    } catch (err) {
+      Alert.alert("Senha inválida!", "Tente novamente...")
+    }
   }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={globalStyle.spacelessContainer}>
-        <Header>Visualizar</Header>
+        <Header>Exibir</Header>
         <View style={styles.dados}>
           <Texto regular style={globalStyle.labelText}>
             Titulo

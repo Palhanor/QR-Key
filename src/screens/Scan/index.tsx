@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Header from "../../components/Header";
 import Texto from "../../components/Texto";
@@ -19,6 +19,7 @@ export default function Scan() {
     setEscaneado(false);
   }, []);
 
+
   function pedirPermissao() {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -26,9 +27,15 @@ export default function Scan() {
     })();
   }
 
-  function enviarDados({ data }: { data: string }) {
-    setEscaneado(true);
-    navigation.navigate("Decriptar", { data: data });
+  function escanear({ data }: { data: string }) {
+    if (data.substring(0, 6) == '{"t":"') {
+      setEscaneado(true);
+      navigation.navigate("Decriptar", { data: data });
+    } else {
+      setEscaneado(true);
+      Alert.alert("Erro ao escanear", "O Código escaneado não se trata de um QR Key", 
+        [{text: "Voltar", onPress: () => navigation.navigate("QR Key")}]);
+    }
   }
 
   function aguardarPermissao() {
@@ -58,7 +65,7 @@ export default function Scan() {
       <Header>Visualizar</Header>
       <View style={styles.barcodebox}>
         <BarCodeScanner
-          onBarCodeScanned={escaneado ? undefined : enviarDados}
+          onBarCodeScanned={escaneado ? undefined : escanear}
           style={styles.barcode}
         />
       </View>
@@ -67,7 +74,6 @@ export default function Scan() {
           Visualizando...
         </Texto>
       )}
-      {/* {scanned && <Botao onPress={() => setScanned(false)}>Reescanear</Botao>} */}
     </View>
   );
 }

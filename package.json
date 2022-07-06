@@ -26,8 +26,12 @@
     "react-native-qrcode-svg": "^6.1.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-share": "^7.6.4",
     "react-native-svg": "12.1.1",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "expo-sharing": "~10.1.0",
+    "expo-file-system": "~13.1.4",
+    "expo-media-library": "~14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

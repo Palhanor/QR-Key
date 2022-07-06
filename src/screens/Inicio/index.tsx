@@ -3,7 +3,7 @@ import { StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../../components/Header";
 import Botao from "../../components/Botao";
-import logo from "../../../assets/QRKey.png";
+import logo from "../../../assets/favicon.png";
 import globalStyle from "../../styles";
 import { propsStack } from "../../interfaces/screens";
 

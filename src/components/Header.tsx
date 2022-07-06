@@ -3,14 +3,19 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Texto from "./Texto";
 import { AntDesign } from '@expo/vector-icons';
+import { propsStack } from "../interfaces/screens";
+import { useFonts, Quantico_700Bold } from "@expo-google-fonts/quantico";
 
 export default function Header({ children }: { children: string }) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<propsStack>();
   const marginLeft = children !== "QR Key" ? -68 : 0;
 
-
   function retornar() {
-    navigation.goBack()
+    if (children !== "Exibir") {
+      navigation.goBack();
+    } else {
+      navigation.navigate("QR Key");
+    }
   }
 
   return (
