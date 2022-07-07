@@ -12,11 +12,12 @@ import globalStyle from "../../styles";
 import Header from "../../components/Header";
 import StyledText from "../../components/StyledText";
 import StyledButton from "../../components/StyledButton";
+import { DecryptProps } from "../../interfaces/screens";
 
 const CryptoJS = require("crypto-js");
 
 export default function Decrypt() {
-  const { params }: {params: {data: string }} = useRoute();
+  const { params } = useRoute<DecryptProps>();
 
   const [decryptedMessage, setDecryptedMessage] = useState<string>("");
   const [isDecrypted, setIsDecrypted] = useState<boolean>(false);

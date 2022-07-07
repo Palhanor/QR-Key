@@ -7,9 +7,9 @@ import Encrypt from "./src/screens/Encrypt";
 import Scan from "./src/screens/Scan";
 import QRKey from "./src/screens/QRKey";
 import Decrypt from "./src/screens/Decrypt";
-import { propsNavigationStack } from "./src/interfaces/screens";
+import { RootStackProps } from "./src/interfaces/screens";
 
-const Stack = createNativeStackNavigator<propsNavigationStack>();
+const Stack = createNativeStackNavigator<RootStackProps>();
 
 export default function App() {
   return (

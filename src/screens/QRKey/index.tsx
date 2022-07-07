@@ -5,12 +5,13 @@ import QRCode from "react-native-qrcode-svg";
 import globalStyle from "../../styles";
 import Header from "../../components/Header";
 import StyledButton from "../../components/StyledButton";
+import { QRKeyProps } from "../../interfaces/screens";
 // import * as Sharing from 'expo-sharing';
 // import * as FileSystem from 'expo-file-system';
 // import * as MediaLibrary from 'expo-media-library';
 
 export default function QRKey() {
-  const { params }: { params: { title: string; message: string } } = useRoute();
+  const { params } = useRoute<QRKeyProps>();
 
   const [qrValue, setQRValue] = useState<{ t: string; m: string }>({
     t: "",

@@ -13,12 +13,12 @@ import Header from "../../components/Header";
 import globalStyle from "../../styles";
 import StyledText from "../../components/StyledText";
 import StyledButton from "../../components/StyledButton";
-import { propsStack } from "../../interfaces/screens";
+import { NavigationStackProps } from "../../interfaces/screens";
 
 const CryptoJS = require("crypto-js");
 
 export default function Encrypt() {
-  const navigation = useNavigation<propsStack>();
+  const navigation = useNavigation<NavigationStackProps>();
 
   const [title, setTitle] = useState<string>("");
   const [key, setKey] = useState<string>("");

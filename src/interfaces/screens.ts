@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
 
-export type propsNavigationStack = {
+export type RootStackProps = {
     "Home": undefined
     "Encrypt": undefined
     "Scan": undefined
@@ -13,4 +14,6 @@ export type propsNavigationStack = {
     }
 }
 
-export type propsStack = NativeStackNavigationProp<propsNavigationStack>
+export type NavigationStackProps = NativeStackNavigationProp<RootStackProps>
+export type DecryptProps = RouteProp<RootStackProps, "Decrypt">
+export type QRKeyProps = RouteProp<RootStackProps, "QRKey">

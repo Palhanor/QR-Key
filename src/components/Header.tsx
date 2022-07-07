@@ -4,10 +4,10 @@ import AppLoading from "expo-app-loading";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, Quantico_700Bold } from "@expo-google-fonts/quantico";
-import { propsStack } from "../interfaces/screens";
+import { NavigationStackProps } from "../interfaces/screens";
 
 export default function Header({ children }: { children: string }) {
-  const navigation = useNavigation<propsStack>();
+  const navigation = useNavigation<NavigationStackProps>();
   const marginLeft = children !== "QR Key" ? -68 : 0;
 
   let [fontsLoaded] = useFonts({

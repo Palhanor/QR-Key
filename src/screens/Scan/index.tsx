@@ -6,13 +6,13 @@ import globalStyle from "../../styles";
 import Header from "../../components/Header";
 import StyledText from "../../components/StyledText";
 import StyledButton from "../../components/StyledButton";
-import { propsStack } from "../../interfaces/screens";
+import { NavigationStackProps } from "../../interfaces/screens";
 
 export default function Scan() {
   const [permission, setPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState<boolean>(false);
 
-  const navigation = useNavigation<propsStack>();
+  const navigation = useNavigation<NavigationStackProps>();
 
   useEffect(() => {
     askPermission();

@@ -4,11 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import globalStyle from "../../styles";
 import Header from "../../components/Header";
 import StyledButton from "../../components/StyledButton";
-import logo from "../../../assets/favicon.png";
-import { propsStack } from "../../interfaces/screens";
+import { NavigationStackProps } from "../../interfaces/screens";
 
 export default function Home() {
-  const navigation = useNavigation<propsStack>();
+  const navigation = useNavigation<NavigationStackProps>();
 
   function goToEncrypt() {
     navigation.navigate("Encrypt");
@@ -21,7 +20,7 @@ export default function Home() {
   return (
     <View style={globalStyle.spacedContainer}>
       <Header>QR Key</Header>
-      <Image style={styles.image} source={logo} />
+      <Image style={styles.image} source={require('../../../assets/favicon.png')} />
       <View style={globalStyle.bottomButtons}>
         <StyledButton onPress={goToEncrypt}>Encriptar</StyledButton>
         <StyledButton visual="secondary" onPress={goToScan}>
